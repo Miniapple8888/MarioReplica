@@ -1,4 +1,4 @@
-# Mario Replica
+# Super Mario Bros Replica
 
 Mario 2D platformer game created for https://natalieagus.github.io/50033/
 
@@ -7,4 +7,4 @@ Mario 2D platformer game created for https://natalieagus.github.io/50033/
  - [ ] Cannot skid yet
 
 # Todo
- - [ ] Add box collider to other environment game objects (pipes, brick blocks)
+ - [x] Add box collider to other environment game objects (pipes, brick blocks)

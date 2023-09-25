@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private bool faceRightState = true;
     private Rigidbody2D marioRG;
     private SpriteRenderer marioSprite;
+    private int collisionLayerMask = (1 << 3) | (1 << 6) | (1 << 7);
 
     // state
     [System.NonSerialized]
@@ -59,19 +60,19 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy")) {
+        if (other.gameObject.CompareTag("Enemies")) {
             Debug.Log("Collided with goomba!");
             // play death animation
             marioAnimator.Play("mario_die");
             marioAudio.PlayOneShot(marioDeath);
             alive = false;
-            GameOver();
+            GameOverScene();
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground")) {
+        if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) && !onGroundState) {
             onGroundState = true;
             marioAnimator.SetBool("onGround", onGroundState);
         }

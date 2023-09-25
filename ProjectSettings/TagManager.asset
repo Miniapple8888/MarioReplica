@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Enemies
+  - Obstacles
   - Enemy
   layers:
   - Default
@@ -13,8 +15,8 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
+  - Obstacles
+  - Enemies
   - 
   - 
   - 
