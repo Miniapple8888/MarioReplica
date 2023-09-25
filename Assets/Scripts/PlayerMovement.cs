@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator marioAnimator;
     public AudioSource marioAudio;
     public AudioClip marioDeath;
+    public Transform gameCamera;
     private bool onGroundState = true;
     private float maxSpeed = 20;
     private bool faceRightState = true;
@@ -153,6 +154,8 @@ public class PlayerMovement : MonoBehaviour
         resetButton.transform.localPosition = new Vector3(898.0f, 481.0f, 0.0f);
         overlay.SetActive(false);
         gameOverText.SetActive(false);
+        // reset camera
+        gameCamera.position = new Vector3(0,0,-12.28f);
     }
 
     private void GameOver()
