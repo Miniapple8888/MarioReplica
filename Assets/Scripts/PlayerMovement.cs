@@ -21,8 +21,10 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip marioDeath;
     public Transform gameCamera;
     private bool onGroundState = true;
+    private bool jumpedState = false;
     private float maxSpeed = 20;
     private bool faceRightState = true;
+    private bool moving = false;
     private Rigidbody2D marioRG;
     private SpriteRenderer marioSprite;
     private int collisionLayerMask = (1 << 3) | (1 << 6) | (1 << 7);
@@ -43,20 +45,25 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("a") && faceRightState) {
-            faceRightState = false;
-            marioSprite.flipX = true;
-            if (marioRG.velocity.x > 0.1f)
-                marioAnimator.SetTrigger("onSkid");
-        }
-        if (Input.GetKeyDown("d") && !faceRightState) {
-            faceRightState = true;
-            marioSprite.flipX = false;
-            if (marioRG.velocity.x < -0.1f)
-                marioAnimator.SetTrigger("onSkid");
-        }
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioRG.velocity.x));
     }
+
+    void FlipMarioSprite(int value)
+    {
+        if (value == -1 && faceRightState) {
+            faceRightState = false;
+            marioSprite.flipX = true;
+            if (marioRG.velocity.x > 0.05f)
+                marioAnimator.SetTrigger("onSkid");
+
+        } else if (value == 1 && !faceRightState) {
+            faceRightState = true;
+            marioSprite.flipX = false;
+            if (marioRG.velocity.x < -0.05f)
+                marioAnimator.SetTrigger("onSkid");
+        }
+    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -81,39 +88,49 @@ public class PlayerMovement : MonoBehaviour
     // Fixed Update is called 50 times a second
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        
-        if (alive) {
-            if (Mathf.Abs(moveHorizontal) > 0) { // if player wants to move
-                Vector2 movement = new Vector2(moveHorizontal, 0);
-                // check it doesn't go beyond max speed
-                if (marioRG.velocity.magnitude < maxSpeed)
-                    marioRG.AddForce(movement * speed);
-            }
-
-            // when player releases movement key, stop
-            if (Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
-                marioRG.velocity = Vector2.zero;
-            }
-
-            if (Input.GetKeyDown("space") && onGroundState) {
-                marioRG.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
-                onGroundState = false;
-                marioAnimator.SetBool("onGround", onGroundState);
-            }
-
-            // toggle flipping mario when facing different direction
-            if (Input.GetKeyDown("a") && faceRightState) {
-                faceRightState = false;
-                marioSprite.flipX = true;
-            }
-
-            if (Input.GetKeyDown("d") && !faceRightState) {
-                faceRightState = true;
-                marioSprite.flipX = false;
-            }   
+        if (alive && moving) {
+            Move(faceRightState == true ? 1 : -1);
         }
-        
+    }
+
+    public void Jump()
+    {
+        if (alive && onGroundState) {
+            // jump
+            marioRG.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+            onGroundState = false;
+            jumpedState = true;
+            marioAnimator.SetBool("onGround", onGroundState);
+        } 
+    }
+
+    public void JumpHold()
+    {
+        if (alive && jumpedState) {
+            // jump higher
+            marioRG.AddForce(Vector2.up * upSpeed * 30, ForceMode2D.Force);
+            jumpedState = false;
+        }
+    }
+
+    void Move(int value)
+    {
+
+        Vector2 movement = new Vector2(value, 0);
+        // doesn't go beyond maxSpeed
+        if (marioRG.velocity.magnitude < maxSpeed)
+            marioRG.AddForce(movement * speed);
+    }
+
+    public void MoveCheck(int value)
+    {
+        if (value == 0) {
+            moving = false;
+        } else {
+            FlipMarioSprite(value);
+            moving = true;
+            Move(value);
+        }
     }
 
     void PlayJumpSound()
@@ -137,6 +154,22 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Restart!");
         ResetGame();
         Time.timeScale = 1.0f; // resume time
+    }
+
+    public void GameRestart()
+    {
+        // reset position
+        marioRG.transform.position = new Vector3(-6f, -3.23f, 0.0f);
+        // reset sprite direction
+        faceRightState = true;
+        marioSprite.flipX = false;
+
+        // reset animation
+        marioAnimator.SetTrigger("gameRestart");
+        alive = true;
+
+        // reset camera position
+        gameCamera.position = new Vector3(0,0,-12.28f);
     }
 
     private void ResetGame()
