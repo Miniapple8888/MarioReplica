@@ -33,14 +33,25 @@ public class QuestionBoxController : MonoBehaviour
             isDisabled = true;
             questionBox.SetBool("disabled", isDisabled);
             // spawn coin
-            Vector3 coinRelativePos = new Vector3(0f, 0f, -0.33f);
-            Vector3 spawnPos = transform.parent.transform.position + coinRelativePos;
-            GameObject coinObject = Instantiate(coin, spawnPos, Quaternion.identity);
-            coinObject.transform.parent = this.transform.parent;
-            coinObject.transform.position = this.transform.parent.transform.position + coinRelativePos;
+            // Vector3 coinRelativePos = new Vector3(0f, 0f, -0.33f);
+            // Vector3 spawnPos = transform.parent.transform.position + coinRelativePos;
+            // GameObject coinObject = Instantiate(coin, spawnPos, Quaternion.identity);
+            // coinObject.transform.parent = this.transform.parent;
+            // coinObject.transform.position = this.transform.parent.transform.position + coinRelativePos;
+            coin.SetActive(true);
             // get rid of bouncing effect
-            Destroy(spring);
-            Destroy(rg);
+            //Destroy(spring);
+            //spring.enabled = false;
+            //Destroy(rg);
+            //rg.isKinematic = false;
         }
+    }
+
+    public void Reset()
+    {
+        isDisabled = false;
+        questionBox.SetBool("disabled", isDisabled);
+        //rg.isKinematic = true;
+        //spring.enabled = true;
     }
 }

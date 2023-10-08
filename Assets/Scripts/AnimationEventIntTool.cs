@@ -21,7 +21,7 @@ public class AnimationEventIntTool : MonoBehaviour
 
     public void TriggerIntEvent()
     {
-        //Debug.Log("Parameter increase" + parameter.ToString());
+        Debug.Log("Parameter increase" + parameter.ToString());
         useInt.Invoke(parameter);
     }
 }

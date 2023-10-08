@@ -12,7 +12,7 @@ public class JumpGoomba : MonoBehaviour
     private bool onGroundState;
 
     [System.NonSerialized]
-    public int score = 0; // why don't we make this private then?
+    public int score = 0;
 
     private bool countScoreState = false;
     public Vector3 boxSize;
@@ -36,17 +36,24 @@ public class JumpGoomba : MonoBehaviour
             onGroundState = false;
             countScoreState = true;
         }
-        if (!onGroundState && countScoreState) {
-            if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f) {
-                countScoreState = false;
-                gameManager.IncreaseScore(1);
-            }
-        }
+        // if (!onGroundState && countScoreState) {
+        //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f) {
+        //         countScoreState = false;
+        //         gameManager.IncreaseScore(1);
+        //     }
+        // }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground")) onGroundState  = true;
+        if (!onGroundState && countScoreState) {
+            if (col.gameObject.CompareTag("Enemies")) {
+                col.gameObject.GetComponent<Animator>().Play("goomba_dead");
+                Debug.Log("Goomba dead");
+                col.gameObject.GetComponent<EnemyMovement>().SetAlive(false);
+            }
+        }
     }
 
     void OnDrawGizmos()

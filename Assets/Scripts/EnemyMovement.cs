@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public Vector3 startPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    public bool alive = true;
+    public Animator goombaAnimator;
     private float originalX;
     private float maxOffset = 5.0f;
     private float enemyPatrolTime = 2.0f;
@@ -39,21 +41,36 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(enemyRG.position.x - originalX) < maxOffset) {
-            Movegoomba(); // not out of boundary of place it can move
-        } else {
-            moveRight *= -1; // flip direction
-            ComputeVelocity();
-            Movegoomba();
+        if (alive) {
+            if (Mathf.Abs(enemyRG.position.x - originalX) < maxOffset) {
+                Movegoomba(); // not out of boundary of place it can move
+            } else {
+                moveRight *= -1; // flip direction
+                ComputeVelocity();
+                Movegoomba();
+            }
         }
     }
 
      public void GameRestart()
     {
+        alive = true;
         transform.localPosition = startPosition;
         originalX = transform.position.x;
         moveRight = -1;
         ComputeVelocity();
+        goombaAnimator.SetTrigger("GameRestart");
+
+    }
+
+    public void SetAlive(bool alive)
+    {
+        this.alive = alive;
+    }
+
+    public bool GetAlive()
+    {
+        return this.alive;
     }
 
 }

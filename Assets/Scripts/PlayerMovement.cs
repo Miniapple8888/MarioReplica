@@ -68,12 +68,15 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Enemies")) {
-            Debug.Log("Collided with goomba!");
-            // play death animation
-            marioAnimator.Play("mario_die");
-            marioAudio.PlayOneShot(marioDeath);
-            alive = false;
-            GameOverScene();
+            if (other.gameObject.GetComponent<EnemyMovement>().GetAlive()) {
+                Debug.Log("Collided with goomba!");
+                // play death animation
+                marioAnimator.Play("mario_die");
+                marioAudio.PlayOneShot(marioDeath);
+                alive = false;
+                GameOverScene();
+            }
+            
         }
     }
 
@@ -170,6 +173,8 @@ public class PlayerMovement : MonoBehaviour
 
         // reset camera position
         gameCamera.position = new Vector3(0,0,-12.28f);
+        // restart playing background music
+        gameCamera.GetComponent<AudioSource>().Play();
     }
 
     private void ResetGame()

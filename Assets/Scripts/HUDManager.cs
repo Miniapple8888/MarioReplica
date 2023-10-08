@@ -19,6 +19,8 @@ public class HUDManager : MonoBehaviour
 
     public GameObject overlay;
     public GameObject gameOverText;
+    //public BMusic bgmusic;
+    public AudioSource gameOverAudio;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,7 @@ public class HUDManager : MonoBehaviour
 
     public void SetScore(int score)
     {
-        Debug.Log("Setting Score");
+        Debug.Log("Setting Score" + score.ToString());
         scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString();
     }
 
@@ -53,5 +55,7 @@ public class HUDManager : MonoBehaviour
         gameOverText.SetActive(true);
         scoreText.transform.localPosition = scoreTextPos[1];
         resetButton.transform.localPosition = resetButtonPos[1];
+        //bgmusic.Stop();
+        gameOverAudio.PlayOneShot(gameOverAudio.clip);
     }
 }
