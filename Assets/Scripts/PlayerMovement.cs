@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 // <a href="https://www.flaticon.com/free-icons/reset" title="reset icons">Reset icons created by Dixit Lakhani_02 - Flaticon</a>
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
-    public JumpGoomba jumpGoomba;
+    // variables can be changed in the inspector
     public float upSpeed = 10;
     public float speed = 20;
-    public float deathImpulse = 5.0f;
-    public TextMeshProUGUI scoreText;
-    public Button resetButton;
-    public GameObject overlay;
-    public GameObject gameOverText;
-    public GameObject enemies;
+    public float deathImpulse = 15.0f;
+    // assignable in the inspector
     public Animator marioAnimator;
     public AudioSource marioAudio;
     public AudioClip marioDeath;
     public Transform gameCamera;
+    public UnityEvent gameOver;
     private bool onGroundState = true;
     private bool jumpedState = false;
     private float maxSpeed = 20;
@@ -40,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
         marioRG = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
         marioAnimator.SetBool("onGround", onGroundState);
+        // subscribe to scene manager change
+        SceneManager.activeSceneChanged += SetStartingPosition;
     }
 
     // Update is called once per frame
@@ -69,12 +70,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemies")) {
             if (other.gameObject.GetComponent<EnemyMovement>().GetAlive()) {
-                Debug.Log("Collided with goomba!");
-                // play death animation
+                // mario dies
                 marioAnimator.Play("mario_die");
                 marioAudio.PlayOneShot(marioDeath);
                 alive = false;
-                GameOverScene();
+                gameOver.Invoke();
             }
             
         }
@@ -146,17 +146,11 @@ public class PlayerMovement : MonoBehaviour
         marioRG.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
     }
 
-    void GameOverScene()
+    public void SetStartingPosition(Scene current, Scene next)
     {
-        Time.timeScale = 0.0f;
-        GameOver();
-    }
-
-    public void RestartButtonCallback(int input)
-    {
-        Debug.Log("Restart!");
-        ResetGame();
-        Time.timeScale = 1.0f; // resume time
+        if (next.name == "World1-2") {
+            this.transform.position = new Vector3(-4.944819f, -3.443201f, 0f);
+        }
     }
 
     public void GameRestart()
@@ -177,35 +171,4 @@ public class PlayerMovement : MonoBehaviour
         gameCamera.GetComponent<AudioSource>().Play();
     }
 
-    private void ResetGame()
-    {
-        marioRG.transform.position = new Vector3(-6f, -3.23f, 0.0f);
-        faceRightState = true;
-        marioSprite.flipX = false;
-        scoreText.text =  "Score: 0";
-        foreach (Transform eachChild in enemies.transform) {
-            eachChild.transform.localPosition = eachChild.GetComponent<EnemyMovement>().startPosition;
-        }
-        jumpGoomba.score = 0;
-        marioAnimator.SetTrigger("gameRestart");
-        alive = true;
-        scoreText.transform.localPosition = new Vector3(-842.0f, 488.0f, 0.0f);
-        resetButton.transform.localPosition = new Vector3(898.0f, 481.0f, 0.0f);
-        overlay.SetActive(false);
-        gameOverText.SetActive(false);
-        // reset camera
-        gameCamera.position = new Vector3(0,0,-12.28f);
-    }
-
-    private void GameOver()
-    {
-        Debug.Log("Game Over!");
-        Time.timeScale = 0.0f; 
-        scoreText.transform.localPosition = new Vector3(-39.0f, 35.0f, 0.0f);
-        resetButton.transform.localPosition = new Vector3(-2.0f, -62.0f, 0.0f);
-        Debug.Log("X:" +scoreText.transform.position.x.ToString());
-        Debug.Log("y:" +scoreText.transform.position.y.ToString());
-        overlay.SetActive(true);
-        gameOverText.SetActive(true);
-    }
 }

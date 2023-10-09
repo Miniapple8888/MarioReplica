@@ -18,7 +18,7 @@ TagManager:
   - UI
   - Obstacles
   - Enemies
-  - 
+  - Interactive
   - 
   - 
   - 
@@ -43,9 +43,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3874755145
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Obstacles
     uniqueID: 1761660781
+    locked: 0
+  - name: Castle
+    uniqueID: 4208822061
     locked: 0
