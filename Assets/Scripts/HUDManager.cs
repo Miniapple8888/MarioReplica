@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HUDManager : Singleton<HUDManager> 
+public class HUDManager : MonoBehaviour 
 {
 
     private Vector3[] scoreTextPos = {
@@ -21,6 +21,14 @@ public class HUDManager : Singleton<HUDManager>
     public GameObject gameOverText;
     //public BMusic bgmusic;
     public AudioSource gameOverAudio;
+    
+    void Awake()
+    {
+        GameManager.instance.gameStart.AddListener(GameStart);
+        GameManager.instance.gameOver.AddListener(GameOver);
+        GameManager.instance.gameRestart.AddListener(GameStart);
+        GameManager.instance.scoreChange.AddListener(SetScore);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +63,6 @@ public class HUDManager : Singleton<HUDManager>
         gameOverText.SetActive(true);
         scoreText.transform.localPosition = scoreTextPos[1];
         resetButton.transform.localPosition = resetButtonPos[1];
-        //bgmusic.Stop();
-        gameOverAudio.PlayOneShot(gameOverAudio.clip);
+        //gameOverAudio.PlayOneShot(gameOverAudio.clip);  //to be implemented later
     }
 }

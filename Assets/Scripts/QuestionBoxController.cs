@@ -6,6 +6,7 @@ public class QuestionBoxController : MonoBehaviour
 {
     public Animator questionBox;
     public GameObject coin;
+    public GameObject powerup;
     private SpringJoint2D spring;
     private Rigidbody2D rg;
     private bool isDisabled = false;
@@ -33,12 +34,15 @@ public class QuestionBoxController : MonoBehaviour
             isDisabled = true;
             questionBox.SetBool("disabled", isDisabled);
             // spawn coin
-            // Vector3 coinRelativePos = new Vector3(0f, 0f, -0.33f);
-            // Vector3 spawnPos = transform.parent.transform.position + coinRelativePos;
-            // GameObject coinObject = Instantiate(coin, spawnPos, Quaternion.identity);
-            // coinObject.transform.parent = this.transform.parent;
-            // coinObject.transform.position = this.transform.parent.transform.position + coinRelativePos;
-            coin.SetActive(true);
+            if (coin != null) {
+                coin.SetActive(true);
+            }
+            // spawn powerup
+            if (powerup != null) {
+                Animator powerupAnim = powerup.GetComponent<Animator>();
+                powerupAnim.Play("spawn");
+            }
+            // powerupSource.PlayOneShot(coinSound.clip); dunno if there is sound
             // get rid of bouncing effect
             //Destroy(spring);
             //spring.enabled = false;

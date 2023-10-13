@@ -6,7 +6,7 @@ public class CoinPop : MonoBehaviour
 {
     public AudioSource coinSound;
     public Animator coinAnimator;
-    private float deathDelay = 1.0f; // self destroy after spawn
+    //private float deathDelay = 1.0f; // self destroy after spawn
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +31,6 @@ public class CoinPop : MonoBehaviour
     public void Pop()
     {
         // disabling coin when finished animation
-        gameObject.active = false;
+        gameObject.SetActive(false);
     }
 }

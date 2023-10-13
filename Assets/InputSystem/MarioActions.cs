@@ -65,12 +65,12 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""point"",
-                    ""type"": ""Button"",
-                    ""id"": ""d484e05f-5317-4065-bfe1-25bdd60b0932"",
-                    ""expectedControlType"": ""Button"",
+                    ""type"": ""Value"",
+                    ""id"": ""dbfbb440-d049-49e4-8611-9a0b32f683e4"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -88,7 +88,7 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""d5dfb047-d8cd-4587-bdb1-c0fed01b7084"",
-                    ""path"": ""<Mouse>/delta/left"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""SuperMarioBros"",
@@ -99,7 +99,7 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""03b5e3e7-a463-49f2-a5b1-262a234c1a02"",
-                    ""path"": ""<Mouse>/delta/right"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""SuperMarioBros"",
@@ -175,7 +175,7 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""One Modifier"",
-                    ""id"": ""f866b3a2-c0c0-4917-b2fb-c45f2c40b317"",
+                    ""id"": ""001f4c65-6928-4823-959e-aabbf91cd1be"",
                     ""path"": ""OneModifier"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -186,7 +186,7 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""modifier"",
-                    ""id"": ""73a708b0-5897-4426-915c-9ca82bb1e061"",
+                    ""id"": ""9f56ae86-3b50-47af-b029-23e5f5a38f2d"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -197,8 +197,8 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""binding"",
-                    ""id"": ""0745f23b-b82e-4cb0-9d30-af36ad19139f"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""3dbfe70a-e02e-4c43-a994-371d07a0a701"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""SuperMarioBros"",

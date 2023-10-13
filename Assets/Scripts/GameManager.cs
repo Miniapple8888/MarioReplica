@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -17,6 +18,8 @@ public class GameManager : Singleton<GameManager>
     {
         gameStart.Invoke();
         Time.timeScale = 1.0f;
+        // subscribe to scene manager scene change
+        SceneManager.activeSceneChanged += SceneSetup;
     }
 
     // Update is called once per frame
@@ -25,8 +28,15 @@ public class GameManager : Singleton<GameManager>
         
     }
 
+    public void SceneSetup(Scene current, Scene next)
+    {
+        gameStart.Invoke();
+        SetScore(score);
+    }
+
     public void GameRestart()
     {
+        Debug.Log("Restart Game");
         // reset score
         score = 0;
         SetScore(score);
@@ -36,16 +46,13 @@ public class GameManager : Singleton<GameManager>
 
     public void IncreaseScore(int increment)
     {
-        Debug.Log("Old score " + score.ToString());
         score += increment;
-        Debug.Log("New score " + score.ToString());
         SetScore(score);
     }
 
     public void SetScore(int score)
     {
         scoreChange.Invoke(score);
-        Debug.Log("Invoked score change");
     }
 
 

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 // <a href="https://www.flaticon.com/free-icons/reset" title="reset icons">Reset icons created by Dixit Lakhani_02 - Flaticon</a>
 
-public class PlayerMovement : Singleton<PlayerMovement>
+public class PlayerMovement : MonoBehaviour 
 {
     // variables can be changed in the inspector
     public float upSpeed = 10;
@@ -18,7 +18,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
     public AudioSource marioAudio;
     public AudioClip marioDeath;
     public Transform gameCamera;
-    public UnityEvent gameOver;
+    //public UnityEvent gameOver;
     private bool onGroundState = true;
     private bool jumpedState = false;
     private float maxSpeed = 20;
@@ -31,6 +31,12 @@ public class PlayerMovement : Singleton<PlayerMovement>
     // state
     [System.NonSerialized]
     public bool alive = true;
+
+    void Awake()
+    {
+        // subscribe to GameRestart event
+        GameManager.instance.gameRestart.AddListener(GameRestart);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -54,27 +60,28 @@ public class PlayerMovement : Singleton<PlayerMovement>
         if (value == -1 && faceRightState) {
             faceRightState = false;
             marioSprite.flipX = true;
-            if (marioRG.velocity.x > 0.05f)
+            if (marioRG.velocity.x > 0.1f)
                 marioAnimator.SetTrigger("onSkid");
 
         } else if (value == 1 && !faceRightState) {
             faceRightState = true;
             marioSprite.flipX = false;
-            if (marioRG.velocity.x < -0.05f)
+            if (marioRG.velocity.x < -0.1f)
                 marioAnimator.SetTrigger("onSkid");
         }
     }
-
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Enemies")) {
             if (other.gameObject.GetComponent<EnemyMovement>().GetAlive()) {
                 // mario dies
+                GameObject mainCam = GameObject.FindWithTag("MainCamera");
+                mainCam.GetComponent<AudioSource>().Stop(); // stop bg music
                 marioAnimator.Play("mario_die");
                 marioAudio.PlayOneShot(marioDeath);
                 alive = false;
-                gameOver.Invoke();
+                GameManager.instance.GameOver();
             }
             
         }
@@ -99,7 +106,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
     public void Jump()
     {
         if (alive && onGroundState) {
-            // jump
             marioRG.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
             onGroundState = false;
             jumpedState = true;

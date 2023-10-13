@@ -25,14 +25,10 @@ public class ActionManager : Singleton<ActionManager>
     // called twice, when pressed and unpressed
     public void OnJumpAction(InputAction.CallbackContext context)
     {
-        if (context.started)
-            Debug.Log("Jump was started");
+        if (context.started) {}
         else if (context.performed) {
             jump.Invoke();
-            // Debug.Log("Jump was performed");
-        } else if (context.canceled)
-            Debug.Log("Jump was cancelled");
-
+        } else if (context.canceled) {}
     }
 
     // called twice, when pressed and unpressed
@@ -41,6 +37,7 @@ public class ActionManager : Singleton<ActionManager>
         if (context.started) {
             // Debug.Log("move started");
             int faceRight = context.ReadValue<float>() > 0 ? 1 : -1;
+            Debug.Log("faceRight:" + faceRight.ToString());
             moveCheck.Invoke(faceRight);
         }
         if (context.canceled) {
