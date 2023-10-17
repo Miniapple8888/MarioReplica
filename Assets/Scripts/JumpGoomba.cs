@@ -50,6 +50,7 @@ public class JumpGoomba : MonoBehaviour
         if (!onGroundState && countScoreState) {
             if (col.gameObject.CompareTag("Enemies")) {
                 col.gameObject.GetComponent<Animator>().Play("goomba_dead");
+                GameManager.instance.IncreaseScore(1);
                 Debug.Log("Goomba dead");
                 col.gameObject.GetComponent<EnemyMovement>().SetAlive(false);
             }

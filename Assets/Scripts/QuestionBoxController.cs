@@ -5,7 +5,7 @@ using UnityEngine;
 public class QuestionBoxController : MonoBehaviour
 {
     public Animator questionBox;
-    public GameObject coin;
+    // public GameObject coin;
     public GameObject powerup;
     private SpringJoint2D spring;
     private Rigidbody2D rg;
@@ -16,9 +16,6 @@ public class QuestionBoxController : MonoBehaviour
         questionBox.SetBool("disabled", isDisabled);
         spring = GetComponent<SpringJoint2D>();
         rg = GetComponent<Rigidbody2D>();
-        if (coin == null) {
-            Debug.LogError("Coin is null");
-        }
     }
 
     // Update is called once per frame
@@ -34,9 +31,9 @@ public class QuestionBoxController : MonoBehaviour
             isDisabled = true;
             questionBox.SetBool("disabled", isDisabled);
             // spawn coin
-            if (coin != null) {
-                coin.SetActive(true);
-            }
+            // if (coin != null) {
+            //     coin.SetActive(true);
+            // }
             // spawn powerup
             if (powerup != null) {
                 Animator powerupAnim = powerup.GetComponent<Animator>();

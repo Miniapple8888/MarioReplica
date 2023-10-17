@@ -8,6 +8,7 @@ Mario 2D platformer game created for https://natalieagus.github.io/50033/
  - [ ] PlayDeathImpulse doesn't work
  - ~~[ ] Gameover music doesn't start at appropriate time~~
  - [x] BG music doesn't stop when gameover is triggered
+ - [ ] Fix brick block with coin 
 
 # Todo
  - [x] Add box collider to other environment game objects (pipes, brick blocks)

@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class MagicMushroomPowerup : BasePowerup
 {
+    Rigidbody2D rg;
+    BoxCollider2D boxCollider;
     // setup this object's type
     // instantiate variables
     protected override void Start()
     {
+        rg = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        rg.simulated = false;
+        boxCollider.enabled = false;
         base.Start(); // call base class Start()
         this.type = PowerupType.MagicMushroom;
     }
@@ -34,6 +40,8 @@ public class MagicMushroomPowerup : BasePowerup
     // interface implementation
     public override void SpawnPowerup()
     {
+        rg.simulated = true;
+        boxCollider.enabled = true;
         spawned = true;
         rigidBody.AddForce(Vector2.right * 3, ForceMode2D.Impulse); // move to the right
     }
