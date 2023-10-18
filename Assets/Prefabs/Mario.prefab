@@ -149,15 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4276845f908e7947bc38f1fdfb3b736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpGoomba: {fileID: 5975989798488418854}
-  upSpeed: 15
-  speed: 20.22
-  deathImpulse: 5
-  scoreText: {fileID: 0}
-  resetButton: {fileID: 0}
-  overlay: {fileID: 0}
-  gameOverText: {fileID: 0}
-  enemies: {fileID: 0}
+  gameConstants: {fileID: 11400000, guid: 171c7b16644644b4ebba26d5bfb2d193, type: 2}
   marioAnimator: {fileID: 7874584211672887922}
   marioAudio: {fileID: 2862837646663371488}
   marioDeath: {fileID: 8300000, guid: 0153fd18f01fcea4cb02cff3eb944252, type: 3}
@@ -415,21 +407,9 @@ MonoBehaviour:
     m_ActionId: 16c6538f-a848-4074-b2ce-89e2635407f7
     m_ActionName: gameplay/click[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7402129431566899202}
-        m_TargetAssemblyTypeName: ActionManager, Assembly-CSharp
-        m_MethodName: OnPointAction
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d484e05f-5317-4065-bfe1-25bdd60b0932
-    m_ActionName: gameplay/point[/Mouse/leftButton,/Mouse/position]
+      m_Calls: []
+    m_ActionId: dbfbb440-d049-49e4-8611-9a0b32f683e4
+    m_ActionName: gameplay/point[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: gameplay

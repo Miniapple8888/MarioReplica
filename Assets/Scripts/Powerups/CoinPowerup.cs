@@ -21,6 +21,7 @@ public class CoinPowerup : BasePowerup
 
     public override void SpawnPowerup()
     {
+        Debug.Log("Spawned powerup");
         spawned = true;
         coinSound.PlayOneShot(coinSound.clip);
         GameManager.instance.IncreaseScore(1);

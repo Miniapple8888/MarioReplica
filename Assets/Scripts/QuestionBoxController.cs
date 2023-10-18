@@ -10,6 +10,7 @@ public class QuestionBoxController : MonoBehaviour
     private SpringJoint2D spring;
     private Rigidbody2D rg;
     private bool isDisabled = false;
+    
     // Start is called before the first frame update
     void Start()
     {

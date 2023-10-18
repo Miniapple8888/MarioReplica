@@ -36,12 +36,6 @@ public class JumpGoomba : MonoBehaviour
             onGroundState = false;
             countScoreState = true;
         }
-        // if (!onGroundState && countScoreState) {
-        //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f) {
-        //         countScoreState = false;
-        //         gameManager.IncreaseScore(1);
-        //     }
-        // }
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -49,10 +43,12 @@ public class JumpGoomba : MonoBehaviour
         if (col.gameObject.CompareTag("Ground")) onGroundState  = true;
         if (!onGroundState && countScoreState) {
             if (col.gameObject.CompareTag("Enemies")) {
-                col.gameObject.GetComponent<Animator>().Play("goomba_dead");
-                GameManager.instance.IncreaseScore(1);
-                Debug.Log("Goomba dead");
-                col.gameObject.GetComponent<EnemyMovement>().SetAlive(false);
+                if (col.gameObject.GetComponent<EnemyMovement>().GetAlive()) {
+                    col.gameObject.GetComponent<Animator>().Play("goomba_dead");
+                    GameManager.instance.IncreaseScore(1);
+                    Debug.Log("Goomba dead");
+                    col.gameObject.GetComponent<EnemyMovement>().SetAlive(false);
+                }
             }
         }
     }

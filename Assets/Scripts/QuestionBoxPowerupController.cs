@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 {
+    // TODO: Find a way to disable bounciness of question box
     public Animator powerupAnimator;
     public BasePowerup powerup; // reference to this question box's powerup
 
@@ -36,6 +37,12 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
         transform.localPosition = new Vector3(0, 0, 0);
     }
 
-
+    public void Reset()
+    {
+        powerup.spawned = false;
+        this.GetComponent<Animator>().SetTrigger("GameRestart");
+        powerupAnimator.SetTrigger("GameRestart");
+        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+    }
 
 }

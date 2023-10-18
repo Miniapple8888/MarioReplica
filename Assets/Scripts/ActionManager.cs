@@ -35,13 +35,10 @@ public class ActionManager : Singleton<ActionManager>
     public void OnMoveAction(InputAction.CallbackContext context)
     {
         if (context.started) {
-            // Debug.Log("move started");
             int faceRight = context.ReadValue<float>() > 0 ? 1 : -1;
-            Debug.Log("faceRight:" + faceRight.ToString());
             moveCheck.Invoke(faceRight);
         }
         if (context.canceled) {
-            // Debug.Log("move stopped");
             moveCheck.Invoke(0);
         }
     }

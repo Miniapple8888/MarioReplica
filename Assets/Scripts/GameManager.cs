@@ -10,9 +10,10 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent gameStart;
     public UnityEvent gameRestart;
     public UnityEvent<int> scoreChange;
+    public IntVariable gameScore;
     public UnityEvent gameOver;
 
-    private int score = 0;
+    //private int score = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,28 +32,31 @@ public class GameManager : Singleton<GameManager>
     public void SceneSetup(Scene current, Scene next)
     {
         gameStart.Invoke();
-        SetScore(score);
+        SetScore();
     }
 
     public void GameRestart()
     {
         Debug.Log("Restart Game");
         // reset score
-        score = 0;
-        SetScore(score);
+        //score = 0;
+        gameScore.Value = 0;
+        SetScore();
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
     }
 
     public void IncreaseScore(int increment)
     {
-        score += increment;
-        SetScore(score);
+
+        //score += increment;
+        gameScore.ApplyChange(1);
+        SetScore();
     }
 
-    public void SetScore(int score)
+    public void SetScore()
     {
-        scoreChange.Invoke(score);
+        scoreChange.Invoke(gameScore.Value);
     }
 
 

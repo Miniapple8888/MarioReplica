@@ -329,6 +329,11 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 6716896948786164470, guid: 6679d4cf025e1144f9c4c015c4181b98, type: 3}
   m_PrefabInstance: {fileID: 7559540225083092502}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &8516922699460085616 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2223320101461764454, guid: 6679d4cf025e1144f9c4c015c4181b98, type: 3}
+  m_PrefabInstance: {fileID: 7559540225083092502}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8622557235853007636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -428,7 +433,7 @@ PrefabInstance:
       addedObject: {fileID: 2273246293179954244}
     - targetCorrespondingSourceObject: {fileID: 1121913633863151754, guid: 3f268df1be6eb7149ba828667b655fa6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3926014861456729542}
+      addedObject: {fileID: 7327929336400020935}
   m_SourcePrefab: {fileID: 100100000, guid: 3f268df1be6eb7149ba828667b655fa6, type: 3}
 --- !u!4 &1378677919046483374 stripped
 Transform:
@@ -509,7 +514,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3926014861456729542
+--- !u!114 &7327929336400020935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -518,8 +523,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8662863679285013406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383b56b3a1db16e419eb06b0d521549d, type: 3}
+  m_Script: {fileID: 11500000, guid: ac8f3856f65a5374cadc829f61e48636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionBox: {fileID: 2273246293179954244}
-  powerup: {fileID: 3314048954840875546}
+  powerupAnimator: {fileID: 8516922699460085616}
+  powerup: {fileID: 191104797720805936}

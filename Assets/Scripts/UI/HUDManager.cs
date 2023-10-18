@@ -21,6 +21,8 @@ public class HUDManager : MonoBehaviour
     public GameObject gameOverText;
     //public BMusic bgmusic;
     public AudioSource gameOverAudio;
+    public GameObject highscoreText;
+    public IntVariable gameScore;
     
     void Awake()
     {
@@ -48,7 +50,7 @@ public class HUDManager : MonoBehaviour
         resetButton.transform.localPosition = resetButtonPos[0];
         overlay.SetActive(false);
         gameOverText.SetActive(false);
-        
+        highscoreText.SetActive(false);
     }
 
     public void SetScore(int score)
@@ -63,6 +65,9 @@ public class HUDManager : MonoBehaviour
         gameOverText.SetActive(true);
         scoreText.transform.localPosition = scoreTextPos[1];
         resetButton.transform.localPosition = resetButtonPos[1];
+        // set highscore
+        highscoreText.GetComponent<TextMeshProUGUI>().text = "TOP- " + gameScore.previousHighestValue.ToString("D6");
+        highscoreText.SetActive(true);
         //gameOverAudio.PlayOneShot(gameOverAudio.clip);  //to be implemented later
     }
 }

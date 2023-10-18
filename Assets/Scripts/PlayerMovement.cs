@@ -9,10 +9,11 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour 
 {
-    // variables can be changed in the inspector
-    public float upSpeed = 10;
-    public float speed = 20;
-    public float deathImpulse = 15.0f;
+    public GameConstants gameConstants;
+    float deathImpulse;
+    float upSpeed;
+    float maxSpeed;
+    float speed;
     // assignable in the inspector
     public Animator marioAnimator;
     public AudioSource marioAudio;
@@ -21,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     //public UnityEvent gameOver;
     private bool onGroundState = true;
     private bool jumpedState = false;
-    private float maxSpeed = 20;
     private bool faceRightState = true;
     private bool moving = false;
     private Rigidbody2D marioRG;
@@ -41,6 +41,12 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Set constants
+        speed = gameConstants.speed;
+        maxSpeed = gameConstants.maxSpeed;
+        deathImpulse = gameConstants.deathImpulse;
+        upSpeed = gameConstants.upSpeed;
+
         Application.targetFrameRate = 10;
         marioRG = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
@@ -81,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
                 marioAnimator.Play("mario_die");
                 marioAudio.PlayOneShot(marioDeath);
                 alive = false;
-                GameManager.instance.GameOver();
+                GameManager.instance.GameOver(); // this is happening while the animation is still playing which is why deathimpulse occurs after game is resumed
             }
             
         }
